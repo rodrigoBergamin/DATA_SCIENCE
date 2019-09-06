@@ -1,19 +1,22 @@
 ﻿from __future__ import division
+from collections import Counter
+
 users = [
-  {"id":566, "nome":"Rodrigo"},
-  {"id":21, "nome":"Cristina"},
-  {"id":3258, "nome":"Alessandra"},
-  {"id":2, "nome":"Diana"},
-  {"id":69, "nome":"Clarice"},
-  {"id":33, "nome":"Alberto"},
-  {"id":3369, "nome":"Diogo"},
-  {"id":125, "nome":"Leonardo"},
-  {"id":852, "nome":"Linus"},
-  {"id":987, "nome":"Thomas"},
+  {"id":0, "nome":"Rodrigo"},
+  {"id":1, "nome":"Cristina"},
+  {"id":2, "nome":"Alessandra"},
+  {"id":3, "nome":"Diana"},
+  {"id":4, "nome":"Clarice"},
+  {"id":5, "nome":"Alberto"},
+  {"id":6, "nome":"Diogo"},
+  {"id":7, "nome":"Leonardo"},
+  {"id":8, "nome":"Linus"},
+  {"id":9, "nome":"Thomas"},
   
 ]
+#0,2,3,0,1,2,6
 
-friendship = [ (0,1),(1,2),(0,3),(1,3),(2,5),(2,3),(2,4),(3,6),(8,9),(5,7),(6,8),(7,9), (0,9), (0,8)]
+friendship = [(0,1),(1,2),(0,3),(1,3),(2,5),(2,3),(2,4),(3,6),(8,9),(5,7),(6,8),(7,9),(0,9),(0,8)]
 
 for user in users:
   user["friends"] = []
@@ -38,9 +41,34 @@ new_list = sorted(num_friends_by_id, #método sorted, que retornará um novo arr
        key= lambda u: u[1], #número de amigos de cada usuário
        reverse=True) #em ordem decrescente
 
-print(new_list)
+#print(new_list)
 
 '''add = lambda x, y, z: x + y + z   // recebe argumentos e manipula esses argumentos
 
 print(add(3, 5, 8)) exemplo de lambda, função anonima
 '''
+
+#criando uma função de Pessoas que eu talvez conheça
+
+def friends_of_friends(user):
+  return[foaf['id']
+    for friend in user["friends"]
+    for foaf in friend["friends"]]
+
+print (friends_of_friends(users[0]))
+
+def not_the_same(user, other_user):
+  return user['id'] != other_user['id'] #não são os mesmos se possuirem ids diferentes
+
+def not_friends(user, other_user):
+  return all(
+    not_the_same(friend, other_user) 
+    for friend in user['friends']
+  )
+
+def friend_of_friend_ids(user):
+  return Counter(foaf['id'] for friend in user['friends'] #para cada um dos meus amigos
+for foaf in friend['friends'] #que contam *their* amigos
+   if not_the_same(user,foaf) and not_friends(user, foaf)) #e que não são meus amigos
+
+print(friend_of_friend_ids(users[0]))
