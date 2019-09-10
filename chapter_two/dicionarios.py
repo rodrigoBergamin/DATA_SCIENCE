@@ -10,7 +10,7 @@ except KeyError:
 joel_grade = grades.get('Joel', 0) #método get resgata um valor do dicionário que foi passado como parâmetro
 print(joel_grade)
 
-print(grades.items())
+print(grades.items()) #retorna um array de tuplas, com os pares chave e valor
 
 #usando defautl dict para encontrar palavras em um documento
 
