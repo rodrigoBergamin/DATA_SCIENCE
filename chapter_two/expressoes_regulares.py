@@ -1,0 +1,1 @@
+import re #módulo de expressões regulares
