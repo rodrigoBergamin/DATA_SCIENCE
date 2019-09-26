@@ -8,4 +8,5 @@ plt.plot(years, gdp, color = 'green', marker = 'o', linestyle = 'solid')
 plt.title('GDP Nominal')
 
 plt.ylabel('Bilhões de $')
+plt.xlabel('Anos')
 plt.show()
